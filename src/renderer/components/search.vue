@@ -1,22 +1,22 @@
 <template>
   <div class="rubick-select">
     <div
-      :class="clipboardFile[0].name ? 'clipboard-tag' : 'clipboard-img'"
       v-if="!!clipboardFile.length"
+      :class="clipboardFile[0].name ? 'clipboard-tag' : 'clipboard-img'"
     >
       <img style="margin-right: 8px" :src="getIcon()" />
       <div class="ellipse">{{ clipboardFile[0].name }}</div>
-      <a-tag color="#aaa" v-if="clipboardFile.length > 1">
+      <a-tag v-if="clipboardFile.length > 1" color="#aaa">
         {{ clipboardFile.length }}
       </a-tag>
     </div>
     <div v-else :class="currentPlugin.cmd ? 'rubick-tag' : ''">
       <img
-        @click="() => emit('openMenu')"
         class="rubick-logo"
         :src="currentPlugin.logo || config.perf.custom.logo"
+        @click="() => emit('openMenu')"
       />
-      <div class="select-tag" v-show="currentPlugin.cmd">
+      <div v-show="currentPlugin.cmd" class="select-tag">
         {{ currentPlugin.cmd }}
       </div>
     </div>
@@ -24,27 +24,24 @@
       id="search"
       ref="mainInput"
       class="main-input"
-      @input="(e) => changeValue(e)"
-      @keydown.down="(e) => keydownEvent(e, 'down')"
-      @keydown.tab="(e) => keydownEvent(e, 'down')"
-      @keydown.up="(e) => keydownEvent(e, 'up')"
-      @keydown="(e) => checkNeedInit(e)"
       :value="searchValue"
       :placeholder="
         pluginLoading
           ? '更新检测中...'
           : placeholder || config.perf.custom.placeholder
       "
+      @input="(e) => changeValue(e)"
+      @keydown.down="(e) => keydownEvent(e, 'down')"
+      @keydown.tab="(e) => keydownEvent(e, 'down')"
+      @keydown.up="(e) => keydownEvent(e, 'up')"
+      @keydown="(e) => checkNeedInit(e)"
       @keypress.enter="(e) => keydownEvent(e, 'enter')"
       @keypress.space="(e) => keydownEvent(e, 'space')"
       @focus="emit('focus')"
     >
       <template #suffix>
         <div class="suffix-tool">
-          <MoreOutlined
-            @click="showSeparate()"
-            class="icon-more"
-          />
+          <MoreOutlined class="icon-more" @click="showSeparate()" />
         </div>
       </template>
     </a-input>
@@ -216,19 +213,19 @@ const showSeparate = () => {
       },
     ]);
   }
-  let menu = Menu.buildFromTemplate(pluginMenu);
+  const menu = Menu.buildFromTemplate(pluginMenu);
   menu.popup();
 };
 
 const changeLang = (lang) => {
-  let cfg = { ...config.value };
+  const cfg = { ...config.value };
   cfg.perf.common.lang = lang;
   localConfig.setConfig(JSON.parse(JSON.stringify(cfg)));
   config.value = cfg;
 };
 
 const changeHideOnBlur = () => {
-  let cfg = { ...config.value };
+  const cfg = { ...config.value };
   cfg.perf.common.hideOnBlur = !cfg.perf.common.hideOnBlur;
   localConfig.setConfig(JSON.parse(JSON.stringify(cfg)));
   config.value = cfg;

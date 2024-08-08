@@ -227,7 +227,12 @@ export default class DB {
       result.id = this.replaceDocId(name, result.id);
       return result;
     } catch (e) {
-      return this.errorInfo(e.name, e.message);
+      if (e instanceof Error) {
+        return this.errorInfo(e.name, e.message);
+      } else {
+        // Handle other types of errors if necessary
+        return this.errorInfo('UnknownError', 'An unknown error occurred');
+      }
     }
   }
 

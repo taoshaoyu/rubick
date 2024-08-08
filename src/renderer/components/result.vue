@@ -1,33 +1,36 @@
 <template>
-  <div v-show="!currentPlugin.name && config.perf.common.history" class="options">
+  <div
+    v-show="!currentPlugin.name && config.perf.common.history"
+    class="options"
+  >
     <div
-      class="history-plugins"
       v-if="!options.length || !(searchValue || !!clipboardFile.length)"
+      class="history-plugins"
     >
       <a-row>
         <a-col
-          @click="() => openPlugin(item)"
-          @contextmenu.prevent="openMenu($event,item)"
+          v-for="(item, index) in pluginHistory"
+          :key="index"
           :class="
             currentSelect === index ? 'active history-item' : 'history-item'
           "
           :span="3"
-          v-for="(item, index) in pluginHistory"
-          :key="index"
+          @click="() => openPlugin(item)"
+          @contextmenu.prevent="openMenu($event, item)"
         >
           <a-avatar style="width: 28px; height: 28px" :src="item.icon" />
           <div class="name ellpise">
             {{ item.cmd || item.pluginName || item._name || item.name }}
           </div>
-          <div class="badge" v-if="item.pin"></div>
+          <div v-if="item.pin" class="badge"></div>
         </a-col>
       </a-row>
     </div>
-    <a-list v-else item-layout="horizontal" :dataSource="sort(options)">
+    <a-list v-else item-layout="horizontal" :data-source="sort(options)">
       <template #renderItem="{ item, index }">
         <a-list-item
-          @click="() => item.click()"
           :class="currentSelect === index ? 'active op-item' : 'op-item'"
+          @click="() => item.click()"
         >
           <a-list-item-meta :description="renderDesc(item.desc)">
             <template #title>
@@ -101,7 +104,7 @@ const sort = (options) => {
   for (let i = 0; i < options.length; i++) {
     for (let j = i + 1; j < options.length; j++) {
       if (options[j].zIndex > options[i].zIndex) {
-        let temp = options[i];
+        const temp = options[i];
         options[i] = options[j];
         options[j] = temp;
       }
@@ -138,7 +141,9 @@ const initMainCmdMenus = () => {
       label: '从"使用记录"中删除',
       icon: path.join(__static, 'icons', 'delete@2x.png'),
       click: () => {
-        const history = props.pluginHistory.filter((item) => item.name !== menuState.plugin.name);
+        const history = props.pluginHistory.filter(
+          (item) => item.name !== menuState.plugin.name
+        );
         emit('setPluginHistory', toRaw(history));
       },
     },

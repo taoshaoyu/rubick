@@ -67,6 +67,7 @@ module.exports = {
       builderOptions: {
         productName: 'rubick',
         appId: 'com.muwoo.rubick',
+        asar: false, 
         compression: 'maximum',
         // afterPack: './release.js',
         // afterAllArtifactBuild: () => {

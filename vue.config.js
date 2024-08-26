@@ -25,9 +25,13 @@ module.exports = {
         "net": false,
         "constants": false, 
         "zlib": false, 
-        "dns": false
+        "dns": false,
+        "crypto": false,
+        "timers": false,
+        "querystring": false
       },
     },
+
     externals:{ 
       'node:buffer': {}, 
       'node:crypto':{},
@@ -36,7 +40,7 @@ module.exports = {
       'node:http':{},
       'node:os':{},
       'node:path':{},
-      'node:process':{},
+//      'node:process':{},
       'node:stream':{},
       'node:url':{},
       'node:util':{},
@@ -127,7 +131,7 @@ module.exports = {
           target: [
             {
               target: 'nsis',
-              arch: ['x64', 'ia32'],
+              arch: ['x64'],
             },
           ],
         },

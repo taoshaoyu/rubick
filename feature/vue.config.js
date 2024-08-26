@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   css: {
@@ -7,11 +8,18 @@ module.exports = {
       // 向预处理器 Loader 传递配置选项
       less: {
         // 配置less（其他样式解析用法一致）
-        javascriptEnabled: true, // 设置为true
+        // javascriptEnabled: true, // 设置为true
       },
     },
   },
-  productionSourceMap: false,
+  configureWebpack: {
+    resolve: {
+      fallback: {
+        "path": require.resolve('path-browserify'),
+      }
+    },
+  },
+  productionSourceMap: true,
   outputDir: path.join(__dirname, '../public/feature'),
   publicPath: process.env.NODE_ENV === 'production' ? '' : '/',
   // chainWebpack: (config) => {

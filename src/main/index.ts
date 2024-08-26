@@ -24,6 +24,10 @@ import '../common/utils/localPlugin';
 import checkVersion from './common/versionHandler';
 import registerSystemPlugin from './common/registerSystemPlugin';
 
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('++++:', reason);
+  // 你可以在这里添加更多的日志记录或调试信息
+});
 class App {
   public windowCreator: { init: () => void; getWindow: () => BrowserWindow };
   private systemPlugins: any;

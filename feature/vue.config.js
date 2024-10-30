@@ -19,6 +19,11 @@ module.exports = {
       }
     },
   },
+  devServer: {
+    client: {
+      logging: 'verbose', // 'log' | 'info' | 'warn' | 'error' | 'none' | 'verbose'
+    }
+  },
   productionSourceMap: true,
   outputDir: path.join(__dirname, '../public/feature'),
   publicPath: process.env.NODE_ENV === 'production' ? '' : '/',

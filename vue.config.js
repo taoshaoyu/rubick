@@ -54,6 +54,11 @@ module.exports = {
       entry: 'src/renderer/main.ts',
     },
   },
+  devServer: {
+    client: {
+      logging: 'log', // 'log' | 'info' | 'warn' | 'error' | 'none' | 'verbose'
+    }
+  },
   productionSourceMap: false,
   pluginOptions: {
     electronBuilder: {
